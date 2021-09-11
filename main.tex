@@ -181,7 +181,206 @@ $299m \sim 301m$的范围内进行精度更高的数据搜索。
 \]
 \subsection{问题二}
 \subsubsection{模型的建立}
-根据附件 $1$ 建立空间直角坐标系，该坐标系的
+由于问题 $2$ 天体角度的变化，导致抛物面的开口方向不再沿 $z$ 轴正方向，又由于抛物面绕轴旋转之后
+公式过于复杂，本文采用逆向旋转整个基准球面的方法来使抛物面开口始终沿 $z$ 轴正方向。
+
+如果旋转抛物面，需要先绕 $z$ 轴(方向向量 $(0,0,1)$)沿右手方向旋转 $\alpha$ 角，此时的旋转矩
+阵设为 $R$,再绕 $y$ 轴旋转后的方向向量 $(0,1,0)\cdot R$ 沿右手方向旋转 $90^\circ-\beta$
+角。
+
+所以逆向旋转基准球面的方法应为先绕 $(0,1,0)\cdot R$ 沿右手方向旋转 $\beta-90^\circ$ 角，
+再绕方向向量 $(0,0,1)$ 沿右手方向旋转 $-\alpha$ 角。
+
+对于两次旋转的叠加，本文使用Hamilton四元数和罗德里格旋转公式相结合的方法，证明引理：
+\begin{quote}
+    第一次绕 $\overrightarrow{n_1}$ 旋转 $\theta _1$ 角，第二次绕 $\overrightarrow{n_2}$
+    旋转 $\theta _2$ 角，那么相当于绕 $\overrightarrow{n}$ 旋转 $\theta$ 角。
+    \[
+        \begin{split}
+            \cos(\frac{\theta}{2}) &= \cos(\frac{\theta _1}{2})
+            \cos(\frac{\theta _2}{2}) - (\overrightarrow{n_1} \cdot 
+            \overrightarrow{n_2})\sin(\frac{\theta _1}{2})
+            \sin(\frac{\theta _2}{2}) \\
+            \overrightarrow{n} &= \frac{\displaystyle \overrightarrow{n_1}
+            \cos(\frac{\theta _2}{2})\sin(\frac{\theta _1}{2}) + 
+            \overrightarrow{n_2}\cos(\frac{\theta _1}{2})
+            \sin(\frac{\theta _2}{2}) + \overrightarrow{n_1} \times 
+            \overrightarrow{n_2}\sin(\frac{\theta _1}{2})
+            \sin(\frac{\theta _2}{2})}
+            {\displaystyle \sin(\frac{\theta}{2})} 
+        \end{split}
+    \]
+\end{quote}
+
+\noindent\textbf{证明：}
+
+Hamilton四元数为高阶复数，形如：$q=a+bi+cj+dk$ \par
+$i,j,k$ 为虚数，$i^2=j^2=k^2=-1;$ \par
+$i \times j=k,$ \par
+$i \times k=-j,$ \par
+$j \times k=i,$ \par
+$j \times i=-k,$ \par
+$k \times i=j,$ \par
+$k \times j=-i;$ \par
+$q=a+bi+cj+dk$ 的共轭四元数为：$q^*=a-bi-cj-dk$ \par
+满足：\par
+$qq^*=a^2-(bi+cj+dk)^2=a^2+b^2+c^2+d^2-bck+bck-cdi+cdi-bdj+bdj$ \par
+\quad\ \ \,$=a^2+b^2+c^2+d^2=|q|^2$ \par
+$|q|$ 为 $q$ 的模长。\par
+定义 $q$ 的逆为 $q^{-1}=\frac{\displaystyle q^*}{\displaystyle |q|^2}$ \par
+可以推出 $q^{-1}q=1$ \par
+下面我们先证明：空间中的任意向量 $( x ,y ,z )$，在绕单位向量旋转 $\theta $ 角后（右手方向为正方向），
+其新的坐标位置由四元数 $r$ 的 $i , j , k$ 分量给出：\par
+$r=qp^{-1}q,p=xi+yj+zk,$ \par
+$q = \cos(\frac{\theta }{2}) + \sin(\frac{\theta }{2})(n_xi + 
+    n_yj + n_zk)$ \par
+由于 $q$ 的模长为 $1$, 可知 $q^{-1}=q^*$ \par
+(为便于计算我们直接将向量的基视为复数) \par
+$r = qpq^{-1} = (\cos(\frac{\theta}{2}) + 
+\sin(\frac{\theta}{2})\overrightarrow{n})\overrightarrow{p} 
+(\cos(\frac{\theta}{2}) - \sin(\frac{\theta}{2})
+\overrightarrow{n})$ \par
+其中 $pq^{-1} = \overrightarrow{p} (\cos(\frac{\theta}{2}) - 
+\sin(\frac{\theta}{2})\overrightarrow{n}) = 
+\sin(\frac{\theta}{2})\overrightarrow{n} \cdot \overrightarrow{p} -
+\sin(\frac{\theta}{2})\overrightarrow{p} \times \overrightarrow{n} +
+\overrightarrow{p} \cos(\frac{\theta}{2})$
+\[
+    %\begin{array}{l}
+    \begin{split}
+        r &= qpq^{-1} \\ &= (\cos(\frac{\theta}{2}) - 
+        \sin(\frac{\theta}{2})\overrightarrow{n})
+        (\sin(\frac{\theta}{2})\overrightarrow{n} \cdot \overrightarrow{p} -
+        \sin(\frac{\theta}{2})\overrightarrow{p} \times \overrightarrow{n} +
+        \overrightarrow{p}\cos(\frac{\theta}{2})) \\ &= \sin(\frac{\theta}{2})
+        \cos(\frac{\theta}{2})\overrightarrow{n} \cdot \overrightarrow{p} -
+        (\sin(\frac{\theta}{2})\overrightarrow{n}) \cdot
+        [-\sin(\frac{\theta}{2})\overrightarrow{p} \times \overrightarrow{n} +
+        \overrightarrow{p}\cos(\frac{\theta}{2})] \\ &\quad + 
+        [\sin(\frac{\theta}{2})\overrightarrow{n} \times 
+        (-\sin(\frac{\theta}{2})\overrightarrow{p} \times \overrightarrow{n} +
+        \cos(\frac{\theta}{2})\overrightarrow{p})] + \sin ^2
+        (\frac{\theta}{2})(\overrightarrow{n} \cdot \overrightarrow{p})
+        \overrightarrow{n} \\ &\quad + \cos ^2(\frac{\theta}{2})\overrightarrow{p} -
+        \cos(\frac{\theta}{2})\sin(\frac{\theta}{2})\overrightarrow{p} \times 
+        \overrightarrow{n} \\ &= -\sin^2(\frac{\theta}{2})\overrightarrow{n} \times
+        (\overrightarrow{p} \times \overrightarrow{n}) +
+        \sin^2(\overrightarrow{n} \cdot \overrightarrow{p})\overrightarrow{n} +
+        \cos^2(\frac{\theta}{2})\overrightarrow{p} \\ &\quad - 2\cos(\frac{\theta}{2})
+        \sin(\frac{\theta}{2})\overrightarrow{p} \times \overrightarrow{n} 
+    \end{split}
+    %\end{array}
+\]
+\phantom{哈哈}代入，得：\par
+原式 $= \cos(\theta)\overrightarrow{p} - \sin(\theta)\overrightarrow{p} \times
+\overrightarrow{n} + 2\sin^2(\frac{\theta}{2})(\overrightarrow{n} \cdot 
+\overrightarrow{p})\overrightarrow{n} = \cos(\theta)\overrightarrow{p} -
+\sin(\theta)\overrightarrow{p} \times \overrightarrow{n} +
+(1 - \cos(\theta ))(\overrightarrow{n} \cdot \overrightarrow{p})
+\overrightarrow{n} $
+形式与罗德里格旋转公式相同，所以得证。 \par
+我们再证明引理 \par
+我们知道两次旋转之后的坐标为 $pqrp^{-1}q^{-1}$ \par
+我们记第一次旋转绕向量 $n_1$ 旋转了 $\theta _1$ 角，第二次旋转绕向量 $n_2$ 旋转了 $\theta _2$角，
+则第一次旋转得到的坐标为 $prp^{-1}$，第二次旋转得到的坐标为 $qprp^{-1}q^{-1}$，其中
+\[
+    \begin{split}
+        p = \cos(\frac{\theta _1}{2}) + \sin(\frac{\theta _1}{2})n_{1x}i +
+        \sin(\frac{\theta _1}{2})n_{1y}j + \sin(\frac{\theta _1}{2})n_{1z}k, \\
+        q = \cos(\frac{\theta _2}{2}) + \sin(\frac{\theta _2}{2})n_{2x}i +
+        \sin(\frac{\theta _2}{2})n_{2y}j + \sin(\frac{\theta _2}{2})n_{2z}k
+    \end{split}
+\]
+
+易知，$qp$ 和 $p^{-1}q^{-1}$ 共轭，要证明：
+\[
+    qp = \cos(\theta) + \sin(\theta)n_xi + \sin(\theta)n_yj +
+    \sin(\theta)n_zk
+\]
+
+其中 $\theta$ 和 $\overrightarrow{n}$ 待定。
+\[
+    \begin{split}
+        qp &= (\cos(\frac{\theta _2}{2}) + \sin(\frac{\theta _2}{2})n_{2x}i
+        + \sin(\frac{\theta _2}{2})n_{2y}j + \sin(\frac{\theta _2}{2})n_{2z}k)
+        (\cos(\frac{\theta _1}{2}) + \sin(\frac{\theta _1}{2})n_{1x}i \\ &\quad +
+        \sin(\frac{\theta _1}{2})n_{1y}j + \sin(\frac{\theta _1}{2})n_{1z}k) \\
+        &= \cos(\frac{\theta _1}{2})\cos(\frac{\theta _2}{2}) - 
+        \sin(\frac{\theta _1}{2})\sin(\frac{\theta _2}{2})\overrightarrow{n_1} 
+        \cdot \overrightarrow{n_2} + \cos(\frac{\theta _2}{2})
+        \sin(\frac{\theta _1}{2})\overrightarrow{n_1} \\&\quad + 
+        \cos(\frac{\theta _1}{2})\sin(\frac{\theta _2}{2})\overrightarrow{n_2} +
+        \sin(\frac{\theta _1}{2})\sin(\frac{\theta _2}{2})(\overrightarrow{n_1}
+        \times n_2)
+    \end{split}
+\]
+
+我们证明，上式的模为 $1$ \par
+实部的平方为：
+\begin{multline*}
+    \cos ^2(\frac{\theta _1}{2})\cos ^2(\frac{\theta _2}{2}) \\ +
+    \sin ^2(\frac{\theta _1}{2})\sin ^2(\frac{\theta _2}{2})
+    (\overrightarrow{n_1} \cdot \overrightarrow{n_2})^2 \\ -
+    2\cos(\frac{\theta _1}{2})\cos(\frac{\theta _2}{2})
+    \sin(\frac{\theta _1}{2})\sin(\frac{\theta _2}{2})
+    \overrightarrow{n_1} \cdot \overrightarrow{n_2} 
+\end{multline*}
+
+虚部的平方为：
+\begin{multline*}
+    \cos ^2(\frac{\theta _2}{2})\sin ^2(\frac{\theta _1}{2}) \\ +
+    \cos ^2(\frac{\theta _1}{2})\sin ^2(\frac{\theta _2}{2}) \\ +
+    \sin ^2(\frac{\theta _1}{2})\sin ^2(\frac{\theta _2}{2})
+    (\overrightarrow{n_1} \times \overrightarrow{n_2})^2 \\ +
+    2\cos(\frac{\theta _1}{2})\cos(\frac{\theta _2}{2})
+    \sin(\frac{\theta _1}{2})\sin(\frac{\theta _2}{2})
+    \overrightarrow{n_1} \cdot \overrightarrow{n_2} 
+\end{multline*}
+
+由于 $(\overrightarrow{n_1} \times \overrightarrow{n_2})^2 + (\overrightarrow{n_1} 
+\times \overrightarrow{n_1})^2 = 1$，易知，实部和虚部平方之和为 $1$。
+
+由此可得：旋转角为
+\[
+    \begin{split}
+        \cos(\frac{\theta}{2}) &= \cos(\frac{\theta _1}{2})
+        \cos(\frac{\theta _2}{2}) - (\overrightarrow{n_1} \cdot 
+        \overrightarrow{n_2})\sin(\frac{\theta _1}{2})
+        \sin(\frac{\theta _2}{2}) \\
+        \overrightarrow{n} &= \frac{\displaystyle \overrightarrow{n_1}
+        \cos(\frac{\theta _2}{2})\sin(\frac{\theta _1}{2}) + 
+        \overrightarrow{n_2}\cos(\frac{\theta _1}{2})
+        \sin(\frac{\theta _2}{2}) + \overrightarrow{n_1} \times 
+        \overrightarrow{n_2}\sin(\frac{\theta _1}{2})
+        \sin(\frac{\theta _2}{2})}
+        {\displaystyle \sin(\frac{\theta}{2})} 
+    \end{split}
+\]\par
+证毕
+
+我们将题目附件 $1$ 中数据引入，使用上文中证明的旋转公式，将基准球面各个点的坐标旋转到抛物
+面的对应位置，并将各点坐标保存到“旋转球面.xls”文件中。之后，我们根据工作抛物面的范围，选
+取出调整后可满足位于工作抛物面之内的点。这里我们采用条件为：
+\[
+    x^2+y^2<(150+0.3)^2
+\]
+此处选用 $150+0.3$ 的原因同第一问。
+
+之后，在旋转后的坐标系中，我们同第一问一样，使用蒙特卡罗方法枚举抛物面顶点的坐标，并利用变
+步长法提高精度。此处对于顶点坐标的选取原则不变，仍为使得最终所有顶点调节的距离之和最小，对
+于调节范围之外的点，计其调节距离为 $0.6m$。求出最优的顶点后，可以获得对应的抛物面方程。
+
+此时，我们有条件来求解每个主索结点在抛物面上对应的位置。同第一问，连接主索结点 $(x_1,y_1,z_1)$
+与球心 $(x_c,y_c,z_c)$ 作出直线:
+\[
+    \frac{x-x_c}{x_1-x_c}=\frac{y-y_c}{y_1-y_c}=\frac{z-z_c}{z_1-z_c}
+\]
+直线与抛物面交点即为主索结点在抛物面上对应的位置。
+根据以上模型，在旋转后的坐标系中，对于每个主索结点 $(x_1,y_1,z_1)$，得到其在抛物面上对应的新
+位置 $(x_2,y_2,z_2)$ 后，我们可以求出该点移动距离:
+\[
+    d = \sqrt{(x_2-x_1)^2+(y_2-y_1)^2+(z_2-z_1)^2}
+\]
 \subsubsection{模型的解}
 \subsection{问题三}
 \subsubsection{模型的建立}
@@ -241,6 +440,7 @@ for a = 300.4-1.2:0.1:300.4+1.2
     end
 end
 finala
+
 \end{lstlisting}
 \section{第一问MATLAB代码二(小步长)}
 \begin{lstlisting}[language=matlab]
@@ -298,12 +498,367 @@ for a = 299:0.00001:301
     end
 end
 finala
+
 \end{lstlisting}
-\section{第二问MATLAB代码}
+\section{第二问MATLAB代码一(大步长)}
+\begin{lstlisting}[language=matlab]
+clear all, clc;
+
+%读入数据
+R = 300.4;
+data = xlsread("附件1.csv", 1, 'B2:D2227');%(n*3的矩阵)
+[n1,names,n2] = xlsread("附件1.csv", 1, 'A2:A2227');
+%names(1)
+%names是现在的名称
+%旋转球面上的点
+n2 = [0 0 1];   n1 = [0 1 0];   
+alpha = -36.795;     beta = 78.169;
+n1 = n1 * [cosd(alpha), -sind(alpha),0;sind(alpha),cosd(alpha),0;0,0,1]
+th2 = alpha;    th1 = beta-90;
+
+a1 = n1(1,1);   b1 = n1(1,2);   c1 = n1(1,3);
+a2 = n2(1,1);   b2 = n2(1,2);   c2 = n2(1,3);
+n12 = [b1*c2-b2*c1, a2*c1-a1*c2, a1*b2-a2*b1];
+
+th = 2 * acosd(cosd(th1/2)*cosd(th2/2)-sum(n1.*n2)*sind(th1/2)*sind(th2/2));
+n = (n1*cosd(th2/2)*sind(th1/2)+n2*cosd(th1/2)*sind(th2/2)+n12*sind(th1/2)*sind(th2/2))/sind(th/2);
+a1 = n(1,1);    b1 = n(1,2);    c1=n(1,3);
+
+%求data2也就是旋转后的球面点坐标
+data2 = [];
+for i = 1:2226
+    a2 = data(i,1);
+    b2 = data(i,2);
+    c2 = data(i,3);
+    v = [a2 b2 c2];
+    vv = [b1*c2-b2*c1, a2*c1-a1*c2, a1*b2-a2*b1];
+    v1 = v*cosd(th) + vv*sind(th) + n*sum(n.*v)*(1-cosd(th));
+    data2 = [data2; i, v1];
+end
+xlswrite("旋转球面.xls", data2);
+
+%取出符合要求的点（然后才可以连线），存入到data3(是结构体数组)
+cnt3 = 0;
+for i = 1:2226
+    name = names(i);
+    x = data2(i,2);
+    y = data2(i,3);
+    z = data2(i,4);
+    if(x^2+y^2<(150+0.3)^2)
+        cnt3 = cnt3 + 1;
+        data3(cnt3).x = x;
+        data3(cnt3).y = y;
+        data3(cnt3).z = z;
+        data3(cnt3).num = i;
+        data3(cnt3).name = name;
+    end
+end
+cnt3
+%根据选中的点们，选出a的大小
+anss = inf;
+finala = 0;
+for a = 280:0.1:320
+   s = 0;
+   p = a-300.4*0.534;
+    for i = 1:cnt3
+       num = data3(i).num;
+        x2 = data3(i).x;
+        y2 = data3(i).y;
+        z2 = data3(i).z;
+        ansx1 = (2*x2*(p*z2 + sqrt(p*(a*x2^2 + a*y2^2 + p*z2^2))))/(x2^2 + y2^2); 
+        ansy1 = ansx1 / x2 * y2;
+        ansz1 = ansx1 / x2 * z2;
+        ansx2 = (2*x2*(p*z2 - sqrt(p*(a*x2^2 + a*y2^2 + p*z2^2))))/(x2^2 + y2^2);
+        ansy2 = ansx2 / x2 * y2;
+        ansz2 = ansx2 / x2 * z2;
+        if ansz2 < ansz1
+            ansx = ansx2;
+            ansy = ansy2;
+            ansz = ansz2;
+        else
+            ansx = ansx1;
+            ansy = ansy1;
+            ansz = ansz1;
+        end
+        if ansx^2 + ansy^2 <= 150^2
+            tmps = sqrt((ansx - x2)^2 + (ansy - y2)^2 + (ansz - z2)^2);
+            if tmps > 0.6
+                tmps = 0.6;
+            end
+            s = s + tmps;
+        end
+    end
+    if anss > s
+        anss = s;
+        finala = a;
+    end
+end
+finala
+%对于旋转后的球面，连接基准球面上的点和球心，取连线与抛物面的交点即为最终应该调整到的点并重新存入data4
+a = finala;
+p = a - R*0.534;
+for i = 1:cnt3
+    x2 = data3(i).x;
+    y2 = data3(i).y;
+    z2 = data3(i).z;
+    ansx1 = (2*x2*(p*z2 + sqrt(p*(a*x2^2 + a*y2^2 + p*z2^2))))/(x2^2 + y2^2); 
+    ansy1 = ansx1 / x2 * y2;
+	ansz1 = ansx1 / x2 * z2;
+    ansx2 = (2*x2*(p*z2 - sqrt(p*(a*x2^2 + a*y2^2 + p*z2^2))))/(x2^2 + y2^2);
+    ansy2 = ansx2 / x2 * y2;
+    ansz2 = ansx2 / x2 * z2;
+    if ansz2 < ansz1
+        ansx = ansx2;
+        ansy = ansy2;
+        ansz = ansz2;
+    else
+        ansx = ansx1;
+        ansy = ansy1;
+        ansz = ansz1;
+    end
+    data4(i).x = ansx;
+    data4(i).y = ansy;
+    data4(i).z = ansz;
+    data4(i).name = data3(i).name;
+end
+for i = 1 : cnt3
+    x0 = data3(i).x;
+    y0 = data3(i).y;
+    z0 = data3(i).z;
+    x1 = data4(i).x;
+    y1 = data4(i).y;
+    z1 = data4(i).z;
+    
+    data4(i).d = sqrt((x0-x1)^2+(y0-y1)^2+(z0-z1)^2);
+    if data4(i).d > 0.6
+        data4(i).d = 0.6;
+    end
+    if z1 > z0      %如果新节点更高的话就表示往上推了
+        data4(i).d = data4(i).d;
+    else            %否则表示往下拉了
+        data4(i).d = -data4(i).d;
+    end
+    %将伸缩量数据存入表格
+    ID = data4(i).name;
+    delta = data4(i).d;
+    ii = num2str(i);
+    str1=strcat('A',ii);
+    str1=[str1,':',str1];
+    str2=strcat('B',ii);
+    str2=[str2,':',str2];
+    xlswrite('Output.xlsx',ID,1,str1);
+    xlswrite('Output.xlsx',delta,1,str2);
+    d = abs(data4(i).d);
+    id = data3(i).num;
+    x0 = data(id,1);
+    y0 = data(id,2);
+    z0 = data(id,3);
+    data5(i).name = data3(i).name;
+    data5(i).x = x0 - (d*x0)/sqrt(x0^2+y0^2+z0^2);
+    data5(i).y = y0 - (d*y0)/sqrt(x0^2+y0^2+z0^2);
+    data5(i).z = z0 - (d*z0)/sqrt(x0^2+y0^2+z0^2);
+    %将坐标数据存入表格
+    name = data5(i).name;
+    xx = data5(i).x;
+    yy = data5(i).y;
+    zz = data5(i).z;
+    ii = num2str(i);
+    str1 = strcat('A',ii);
+    str2 = strcat('B',ii);
+    str3 = strcat('C',ii);
+    str4 = strcat('D',ii);
+    str1=[str1,':',str1];
+    str2=[str2,':',str2];
+    str3=[str3,':',str3];
+    str4=[str4,':',str4];
+    xlswrite('PointLocations2.xlsx',name,1,str1);
+    xlswrite('PointLocations2.xlsx',xx,1,str2);
+    xlswrite('PointLocations2.xlsx',yy,1,str3);
+    xlswrite('PointLocations2.xlsx',zz,1,str4);
+end
+
+\end{lstlisting}
+\section{第二问MATLAB代码二(小步长)}
+\begin{lstlisting}[language=matlab]
+clear all, clc;
+
+%读入数据
+R = 300.4;
+data = xlsread("附件1.csv", 1, 'B2:D2227');%(n*3的矩阵)
+[n1,names,n2] = xlsread("附件1.csv", 1, 'A2:A2227');
+%names(1)
+%names是现在的名称
+%旋转球面上的点
+n2 = [0 0 1];   n1 = [0 1 0];   
+alpha = -36.795;     beta = 78.169;
+n1 = n1 * [cosd(alpha), -sind(alpha),0;sind(alpha),cosd(alpha),0;0,0,1]
+th2 = alpha;    th1 = beta-90;
+
+a1 = n1(1,1);   b1 = n1(1,2);   c1 = n1(1,3);
+a2 = n2(1,1);   b2 = n2(1,2);   c2 = n2(1,3);
+n12 = [b1*c2-b2*c1, a2*c1-a1*c2, a1*b2-a2*b1];
+
+th = 2 * acosd(cosd(th1/2)*cosd(th2/2)-sum(n1.*n2)*sind(th1/2)*sind(th2/2));
+n = (n1*cosd(th2/2)*sind(th1/2)+n2*cosd(th1/2)*sind(th2/2)+n12*sind(th1/2)*sind(th2/2))/sind(th/2);
+a1 = n(1,1);    b1 = n(1,2);    c1=n(1,3);
+
+%求data2也就是旋转后的球面点坐标
+data2 = [];
+for i = 1:2226
+    a2 = data(i,1);
+    b2 = data(i,2);
+    c2 = data(i,3);
+    v = [a2 b2 c2];
+    vv = [b1*c2-b2*c1, a2*c1-a1*c2, a1*b2-a2*b1];
+    v1 = v*cosd(th) + vv*sind(th) + n*sum(n.*v)*(1-cosd(th));
+    data2 = [data2; i, v1];
+end
+xlswrite("旋转球面.xls", data2);
+
+%取出符合要求的点（然后才可以连线），存入到data3(是结构体数组)
+cnt3 = 0;
+for i = 1:2226
+    name = names(i);
+    x = data2(i,2);
+    y = data2(i,3);
+    z = data2(i,4);
+    if(x^2+y^2<(150+0.3)^2)
+        cnt3 = cnt3 + 1;
+        data3(cnt3).x = x;
+        data3(cnt3).y = y;
+        data3(cnt3).z = z;
+        data3(cnt3).num = i;
+        data3(cnt3).name = name;
+    end
+end
+cnt3
+%根据选中的点们，选出a的大小
+anss = inf;
+finala = 0;
+for a = 300.8:0.00001:301.0
+    s = 0;
+    p = a-300.4*0.534;
+    for i = 1:cnt3
+        num = data3(i).num;
+        x2 = data3(i).x;
+        y2 = data3(i).y;
+        z2 = data3(i).z;
+        ansx1 = (2*x2*(p*z2 + sqrt(p*(a*x2^2 + a*y2^2 + p*z2^2))))/(x2^2 + y2^2); 
+        ansy1 = ansx1 / x2 * y2;
+        ansz1 = ansx1 / x2 * z2;
+        ansx2 = (2*x2*(p*z2 - sqrt(p*(a*x2^2 + a*y2^2 + p*z2^2))))/(x2^2 + y2^2);
+        ansy2 = ansx2 / x2 * y2;
+        ansz2 = ansx2 / x2 * z2;
+        if ansz2 < ansz1
+            ansx = ansx2;
+            ansy = ansy2;
+            ansz = ansz2;
+        else
+            ansx = ansx1;
+            ansy = ansy1;
+            ansz = ansz1;
+        end
+        if ansx^2 + ansy^2 <= 150^2
+            tmps = sqrt((ansx - x2)^2 + (ansy - y2)^2 + (ansz - z2)^2);
+            if tmps > 0.6
+                tmps = 0.6;
+            end
+            s = s + tmps;
+        end
+    end
+    if anss > s
+        anss = s;
+        finala = a;
+    end
+end
+finala
+%对于旋转后的球面，连接基准球面上的点和球心，取连线与抛物面的交点即为最终应该调整到的点并重新存入data4
+a = finala;
+p = a - R*0.534;
+for i = 1:cnt3
+    x2 = data3(i).x;
+    y2 = data3(i).y;
+    z2 = data3(i).z;
+    ansx1 = (2*x2*(p*z2 + sqrt(p*(a*x2^2 + a*y2^2 + p*z2^2))))/(x2^2 + y2^2); 
+    ansy1 = ansx1 / x2 * y2;
+    ansz1 = ansx1 / x2 * z2;
+    ansx2 = (2*x2*(p*z2 - sqrt(p*(a*x2^2 + a*y2^2 + p*z2^2))))/(x2^2 + y2^2);
+    ansy2 = ansx2 / x2 * y2;
+    ansz2 = ansx2 / x2 * z2;
+    if ansz2 < ansz1
+        ansx = ansx2;
+        ansy = ansy2;
+        ansz = ansz2;
+    else
+        ansx = ansx1;
+        ansy = ansy1;
+        ansz = ansz1;
+    end
+    data4(i).x = ansx;
+    data4(i).y = ansy;
+    data4(i).z = ansz;
+    data4(i).name = data3(i).name;
+end
+for i = 1 : cnt3
+    x0 = data3(i).x;
+    y0 = data3(i).y;
+    z0 = data3(i).z;
+    x1 = data4(i).x;
+    y1 = data4(i).y;
+    z1 = data4(i).z;
+    
+    data4(i).d = sqrt((x0-x1)^2+(y0-y1)^2+(z0-z1)^2);
+    if data4(i).d > 0.6
+        data4(i).d = 0.6;
+    end
+    if z1 > z0      %如果新节点更高的话就表示往上推了
+        data4(i).d = data4(i).d;
+    else            %否则表示往下拉了
+        data4(i).d = -data4(i).d;
+    end
+    %将伸缩量数据存入表格
+    ID = data4(i).name;
+    delta = data4(i).d;
+    ii = num2str(i);
+    str1=strcat('A',ii);
+    str1=[str1,':',str1];
+    str2=strcat('B',ii);
+    str2=[str2,':',str2];
+    xlswrite('Output.xlsx',ID,1,str1);
+    xlswrite('Output.xlsx',delta,1,str2);
+    d = abs(data4(i).d);
+    id = data3(i).num;
+    x0 = data(id,1);
+    y0 = data(id,2);
+    z0 = data(id,3);
+    data5(i).name = data3(i).name;
+    data5(i).x = x0 - (d*x0)/sqrt(x0^2+y0^2+z0^2);
+    data5(i).y = y0 - (d*y0)/sqrt(x0^2+y0^2+z0^2);
+    data5(i).z = z0 - (d*z0)/sqrt(x0^2+y0^2+z0^2);
+    %将坐标数据存入表格
+    name = data5(i).name;
+    xx = data5(i).x;
+    yy = data5(i).y;
+    zz = data5(i).z;
+    ii = num2str(i);
+    str1 = strcat('A',ii);
+    str2 = strcat('B',ii);
+    str3 = strcat('C',ii);
+    str4 = strcat('D',ii);
+    str1=[str1,':',str1];
+    str2=[str2,':',str2];
+    str3=[str3,':',str3];
+    str4=[str4,':',str4];
+    xlswrite('PointLocations2.xlsx',name,1,str1);
+    xlswrite('PointLocations2.xlsx',xx,1,str2);
+    xlswrite('PointLocations2.xlsx',yy,1,str3);
+    xlswrite('PointLocations2.xlsx',zz,1,str4);
+end
+
+\end{lstlisting}
+\section{第三问MATLAB代码一}
 \begin{lstlisting}[language=matlab]
 \end{lstlisting}
-\section{第三问MATLAB代码}
-\begin{lstlisting}[language=matlab]
-\end{lstlisting}
+\section{第三问MATLAB代码二}
 \end{appendices}
 \end{document}
