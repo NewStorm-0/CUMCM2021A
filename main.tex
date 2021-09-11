@@ -14,6 +14,29 @@
 \begin{abstract}
 本文研究我国具有自主知识产权的射电望远镜中国天眼---“FAST”的反射面板从基准态调整到工作态的这一过程，
 并分析工作态时馈源舱接收到的有效信号与反射面的反射信号之比。
+
+问题一要求在观测天体与球心连线过 $z$ 轴的情况下，考虑反射面板调节因素的条件，确定理想抛物面。我们通
+过数据拟合观测确定具体的基准球面方程。利用对称性，在 $z$ 轴负半轴一定范围内枚举顶点 $a$ 的坐标，并
+以所有主索结点总调节长度最小为原则使用变步长法解得顶点 $a$ 的坐标为 $(0,0,-300.90527)$，从而得到抛
+物面方程为：$x^2+y^2=562.3456(z+300.9053)4$
+
+问题二要求观测天体坐标在 $\alpha =26.795^\circ,\beta =78.169^\circ$ 的情况下，确定理想抛物面方
+程并给出主索结点的调解方案。通过分析旋转球面和旋转抛物面的运算代价，我们选择使用Hamilton四元数推导，
+旋转球面所在坐标系，使理想抛物面的顶点始终在 $z$ 轴的负半轴上且抛物面以 $z$ 轴为中轴。之后通过两次
+筛选，找出工作抛物面内的主索结点，在题给限制下计算其移动距离，最后将所有距离求和。同问题一，根据距离
+之和最短为原则，选择出最合理的抛物面方程。
+
+此时，根据新的抛物面结合题给约束，记录下主索结点移动后的位置和移动距离。将球面上主索结点的坐标移动回
+原始的三维直角坐标系，根据新旧位置在 $z$ 轴上的分布和相差距离，确定伸缩量的大小。最终结果保存在了
+result.xlsx表格中。
+
+问题三要求基于第二问的反射面调节方案，计算调节后馈源舱的接收比。我们首先将调整后的工作区域内的三角形取
+出，记录为新的表格数据。然后我们选取三角形的三个顶点为标准，通过反射原理与立体解析几何计算光束经过工作
+区域内三角形到达馈源舱有效区域所在平面的位置，通过统计学知识，得到馈源舱有效区域对于所有反射信号的接收
+程度，与原调节后的工作区域内的抛物面中三角平面对于观测天体光束的接收程度相除，得到调节后馈源舱的接收
+比：$p1 = 29.62\%$,同理，我们对于整个基准反射球面的所有主索结点进行计算，得到馈源舱的接收
+比：$p2 = 10.02\%$。
+
 \keywords{蒙特卡洛法\quad 鬼哭狼嚎\quad 无人生还}
 \end{abstract}
 
@@ -175,12 +198,13 @@ $p = a-R \times 0.534$，抛物面的公式为
 由大步长将 $a$ 的数据范围确定在 $300.9$ 附近之后，由于题目的精度要求，使用小步长 $0.00001m$ 在
 $299m \sim 301m$的范围内进行精度更高的数据搜索。
 \subsubsection{模型的解}
-通过蒙特卡洛搜索得出最优值 $a = 300.9053$。可算出 $p = 140.5864$，所以得到的理想抛物面的方程为
+通过最终的小步长搜索得出最优值 $a = 300.9053$。可算出 $p = 140.5864$，所以得到的理想抛物面的方
+程为
 \[
     x^2 + y^2 = 562.3456(z + 300.9053)
 \]
 \subsection{问题二}
-\subsubsection{模型的建立}
+\subsubsection{模型的建立及求解}
 由于问题 $2$ 天体角度的变化，导致抛物面的开口方向不再沿 $z$ 轴正方向，又由于抛物面绕轴旋转之后
 公式过于复杂，本文采用逆向旋转整个基准球面的方法来使抛物面开口始终沿 $z$ 轴正方向。
 
@@ -197,11 +221,11 @@ $299m \sim 301m$的范围内进行精度更高的数据搜索。
     旋转 $\theta _2$ 角，那么相当于绕 $\overrightarrow{n}$ 旋转 $\theta$ 角。
     \[
         \begin{split}
-            \cos(\frac{\theta}{2}) &= \cos(\frac{\theta _1}{2})
+            &\cos(\frac{\theta}{2}) = \cos(\frac{\theta _1}{2})
             \cos(\frac{\theta _2}{2}) - (\overrightarrow{n_1} \cdot 
             \overrightarrow{n_2})\sin(\frac{\theta _1}{2})
             \sin(\frac{\theta _2}{2}) \\
-            \overrightarrow{n} &= \frac{\displaystyle \overrightarrow{n_1}
+            &\overrightarrow{n} = \frac{\displaystyle \overrightarrow{n_1}
             \cos(\frac{\theta _2}{2})\sin(\frac{\theta _1}{2}) + 
             \overrightarrow{n_2}\cos(\frac{\theta _1}{2})
             \sin(\frac{\theta _2}{2}) + \overrightarrow{n_1} \times 
@@ -229,9 +253,9 @@ $qq^*=a^2-(bi+cj+dk)^2=a^2+b^2+c^2+d^2-bck+bck-cdi+cdi-bdj+bdj$ \par
 $|q|$ 为 $q$ 的模长。\par
 定义 $q$ 的逆为 $q^{-1}=\frac{\displaystyle q^*}{\displaystyle |q|^2}$ \par
 可以推出 $q^{-1}q=1$ \par
-下面我们先证明：空间中的任意向量 $( x ,y ,z )$，在绕单位向量旋转 $\theta $ 角后（右手方向为正方向），
-其新的坐标位置由四元数 $r$ 的 $i , j , k$ 分量给出：\par
-$r=qp^{-1}q,p=xi+yj+zk,$ \par
+下面我们先证明：空间中的任意向量 $( x ,y ,z )$，在绕单位向量 $(n_x,n_y,n_z)$旋转 $\theta $
+角后（右手方向为正方向），其新的坐标位置由四元数 $r$ 的 $i , j , k$ 分量给出：\par
+$r=qpq^{-1},p=xi+yj+zk,$ \par
 $q = \cos(\frac{\theta }{2}) + \sin(\frac{\theta }{2})(n_xi + 
     n_yj + n_zk)$ \par
 由于 $q$ 的模长为 $1$, 可知 $q^{-1}=q^*$ \par
@@ -317,25 +341,25 @@ $r = qpq^{-1} = (\cos(\frac{\theta}{2}) +
 
 我们证明，上式的模为 $1$ \par
 实部的平方为：
-\begin{multline*}
-    \cos ^2(\frac{\theta _1}{2})\cos ^2(\frac{\theta _2}{2}) \\ +
+\begin{align*}
+    \cos ^2(\frac{\theta _1}{2})\cos ^2&(\frac{\theta _2}{2}) +
     \sin ^2(\frac{\theta _1}{2})\sin ^2(\frac{\theta _2}{2})
-    (\overrightarrow{n_1} \cdot \overrightarrow{n_2})^2 \\ -
+    (\overrightarrow{n_1} \cdot \overrightarrow{n_2})^2 \\ &-
     2\cos(\frac{\theta _1}{2})\cos(\frac{\theta _2}{2})
     \sin(\frac{\theta _1}{2})\sin(\frac{\theta _2}{2})
     \overrightarrow{n_1} \cdot \overrightarrow{n_2} 
-\end{multline*}
+\end{align*}
 
 虚部的平方为：
-\begin{multline*}
-    \cos ^2(\frac{\theta _2}{2})\sin ^2(\frac{\theta _1}{2}) \\ +
-    \cos ^2(\frac{\theta _1}{2})\sin ^2(\frac{\theta _2}{2}) \\ +
+\begin{align*}
+    \cos ^2(\frac{\theta _2}{2})&\sin ^2(\frac{\theta _1}{2}) +
+    \cos ^2(\frac{\theta _1}{2})\sin ^2(\frac{\theta _2}{2}) \\ & +
     \sin ^2(\frac{\theta _1}{2})\sin ^2(\frac{\theta _2}{2})
-    (\overrightarrow{n_1} \times \overrightarrow{n_2})^2 \\ +
+    (\overrightarrow{n_1} \times \overrightarrow{n_2})^2 \\ &\quad +
     2\cos(\frac{\theta _1}{2})\cos(\frac{\theta _2}{2})
     \sin(\frac{\theta _1}{2})\sin(\frac{\theta _2}{2})
     \overrightarrow{n_1} \cdot \overrightarrow{n_2} 
-\end{multline*}
+\end{align*}
 
 由于 $(\overrightarrow{n_1} \times \overrightarrow{n_2})^2 + (\overrightarrow{n_1} 
 \times \overrightarrow{n_1})^2 = 1$，易知，实部和虚部平方之和为 $1$。
@@ -343,11 +367,11 @@ $r = qpq^{-1} = (\cos(\frac{\theta}{2}) +
 由此可得：旋转角为
 \[
     \begin{split}
-        \cos(\frac{\theta}{2}) &= \cos(\frac{\theta _1}{2})
+        &\cos(\frac{\theta}{2}) = \cos(\frac{\theta _1}{2})
         \cos(\frac{\theta _2}{2}) - (\overrightarrow{n_1} \cdot 
         \overrightarrow{n_2})\sin(\frac{\theta _1}{2})
         \sin(\frac{\theta _2}{2}) \\
-        \overrightarrow{n} &= \frac{\displaystyle \overrightarrow{n_1}
+        &\overrightarrow{n} = \frac{\displaystyle \overrightarrow{n_1}
         \cos(\frac{\theta _2}{2})\sin(\frac{\theta _1}{2}) + 
         \overrightarrow{n_2}\cos(\frac{\theta _1}{2})
         \sin(\frac{\theta _2}{2}) + \overrightarrow{n_1} \times 
@@ -356,8 +380,11 @@ $r = qpq^{-1} = (\cos(\frac{\theta}{2}) +
         {\displaystyle \sin(\frac{\theta}{2})} 
     \end{split}
 \]\par
-证毕
+\textbf{证毕 $\Box$}
 
+\medskip
+\medskip
+\medskip
 我们将题目附件 $1$ 中数据引入，使用上文中证明的旋转公式，将基准球面各个点的坐标旋转到抛物
 面的对应位置，并将各点坐标保存到“旋转球面.xls”文件中。之后，我们根据工作抛物面的范围，选
 取出调整后可满足位于工作抛物面之内的点。这里我们采用条件为：
@@ -381,7 +408,24 @@ $r = qpq^{-1} = (\cos(\frac{\theta}{2}) +
 \[
     d = \sqrt{(x_2-x_1)^2+(y_2-y_1)^2+(z_2-z_1)^2}
 \]
-\subsubsection{模型的解}
+
+同时，根据主索结点新旧位置的z坐标高低，我们可以判断促动器伸缩：如果新位置的 $z$ 坐标更大，则促
+动器伸缩状态为“伸”（计伸缩量 $d$ 为正）；否则促动器伸缩状态为“缩”（计伸缩量 $d$ 为负）。
+
+统计完每个主索结点的伸缩量后，我们回到原坐标系，根据基准球径向上各个点的伸缩量计算主索结点移动后
+的位置坐标。设主索结点在基准球面上的原始坐标为 $(x0, y0, z0)$, 该节点对应促动器的伸缩量为 $d$，
+主索结点对应抛物面上的新点坐标为 $(x, y,z)$,计算公式如下：
+\[
+    \begin{dcases}
+        \smallskip
+        x = x_0 - \frac{(d*x_0)}{\sqrt{x_0^2+y_0^2+z_0^2}}; \\
+        \smallskip
+        y = y_0 - \frac{(d*y_0)}{\sqrt{x_0^2+y_0^2+z_0^2}}; \\
+        z = z_0 - \frac{(d*z_0)}{\sqrt{x_0^2+y_0^2+z_0^2}};
+    \end{dcases}
+\]
+
+之后将得到的解存入目录的附录中。
 \subsection{问题三}
 \subsubsection{模型的建立}
 \subsubsection{模型的解}
@@ -521,7 +565,8 @@ a2 = n2(1,1);   b2 = n2(1,2);   c2 = n2(1,3);
 n12 = [b1*c2-b2*c1, a2*c1-a1*c2, a1*b2-a2*b1];
 
 th = 2 * acosd(cosd(th1/2)*cosd(th2/2)-sum(n1.*n2)*sind(th1/2)*sind(th2/2));
-n = (n1*cosd(th2/2)*sind(th1/2)+n2*cosd(th1/2)*sind(th2/2)+n12*sind(th1/2)*sind(th2/2))/sind(th/2);
+n = (n1*cosd(th2/2)*sind(th1/2)+n2*cosd(th1/2)*sind(th2/2)+
+    n12*sind(th1/2)*sind(th2/2))/sind(th/2);
 a1 = n(1,1);    b1 = n(1,2);    c1=n(1,3);
 
 %求data2也就是旋转后的球面点坐标
@@ -594,7 +639,8 @@ for a = 280:0.1:320
     end
 end
 finala
-%对于旋转后的球面，连接基准球面上的点和球心，取连线与抛物面的交点即为最终应该调整到的点并重新存入data4
+%对于旋转后的球面，连接基准球面上的点和球心，取连线与抛物面的交点即为最终应该调整到的点
+%并重新存入data4
 a = finala;
 p = a - R*0.534;
 for i = 1:cnt3
@@ -699,7 +745,8 @@ a2 = n2(1,1);   b2 = n2(1,2);   c2 = n2(1,3);
 n12 = [b1*c2-b2*c1, a2*c1-a1*c2, a1*b2-a2*b1];
 
 th = 2 * acosd(cosd(th1/2)*cosd(th2/2)-sum(n1.*n2)*sind(th1/2)*sind(th2/2));
-n = (n1*cosd(th2/2)*sind(th1/2)+n2*cosd(th1/2)*sind(th2/2)+n12*sind(th1/2)*sind(th2/2))/sind(th/2);
+n = (n1*cosd(th2/2)*sind(th1/2)+n2*cosd(th1/2)*sind(th2/2)+
+    n12*sind(th1/2)*sind(th2/2))/sind(th/2);
 a1 = n(1,1);    b1 = n(1,2);    c1=n(1,3);
 
 %求data2也就是旋转后的球面点坐标
@@ -772,7 +819,8 @@ for a = 300.8:0.00001:301.0
     end
 end
 finala
-%对于旋转后的球面，连接基准球面上的点和球心，取连线与抛物面的交点即为最终应该调整到的点并重新存入data4
+%对于旋转后的球面，连接基准球面上的点和球心，取连线与抛物面的交点即为最终应该调整到的点
+%并重新存入data4
 a = finala;
 p = a - R*0.534;
 for i = 1:cnt3
