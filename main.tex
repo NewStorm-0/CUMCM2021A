@@ -20,11 +20,11 @@
 的坐标，并以口径筛选后剩余主索结点的总调节长度最小为原则，使用变步长法解得抛物面顶点的坐标为
 $(0,0,-300.90527)$，从而得到抛物面方程为：$x^2+y^2=562.3456(z+300.9053)$
 
-问题二要求观测天体坐标在 $\alpha =26.795^\circ，\beta =78.169^\circ$的情况下，确定理想抛物面方
+问题二要求观测天体坐标在 $\alpha =26.795^\circ,\beta =78.169^\circ$的情况下，确定理想抛物面方
 程并给出主索结点的调节方案。
 通过分析旋转基准球面和旋转抛物面的运算代价，我们最终选择旋转基准球面来固定抛物线开口仍沿 $z$ 轴，
-对于旋转之后主索节点坐标的计算，我们选择使用Hamilton四元数和罗德里格旋转公式推导一个引理，用其结论
-得到主索节点旋转后的坐标点。
+对于旋转之后主索节点坐标的计算，我们选择使用Hamilton四元数\cite{Hamilton2006}和罗德里格旋转公式
+推导一个引理，用其结论得到主索节点旋转后的坐标点。
 这样理想抛物面的顶点始终在 $z$ 轴的负半轴上且抛物面以 $z$ 轴为对称轴。之后使用问题一的理想抛物面求
 解过程，求解旋转后的理想抛物面顶点。再利用旋转的逆运算将顶点旋转回题目所给空间直角坐标系中即可求得
 理想抛物面的顶点。同时，根据旋转后坐标系中主索节点工作态的坐标，可计算各个主索节点对应促动器的伸缩量。
@@ -40,7 +40,8 @@ $(0,0,-300.90527)$，从而得到抛物面方程为：$x^2+y^2=562.3456(z+300.90
 $p1 = 29.62\%$，同理，我们对于整个基准反射球面的所有主索结点进行计算，得到未经调整的馈源舱接收比：
 $p2 = 10.02\%$。经过对比，调整为工作态能将馈源舱的接收比大幅度提高（提高了 $195.6\%$）。
 
-\keywords{蒙特卡洛法\quad 鬼哭狼嚎\quad 无人生还}
+\keywords{Hamilton四元数\quad 罗德里格旋转公式\quad 空间解析几何\quad 蒙特卡洛法\quad
+            优化模型}
 \end{abstract}
 
 %目录  2019 明确不要目录，我觉得这个规定太好了
@@ -113,17 +114,47 @@ $500$ 米的球面（基准球面）；工作态时反射面的形状被调节�
 利用由两点间距离公式计算出的新坐标系中工作态主索节点坐标与基准球面主索节点坐标间距离来求得各个主索节点
 的促动器顶端的径向伸缩量，再通过伸缩量在原坐标系中得到原坐标系工作态主索节点的位置。
 \subsection{问题三分析}
+题目要求基于第 2 问的反射面调节方案，计算调节后馈源舱的接收比。我们根据调整后主索结点编号与附件3
+选出完全位于工作抛物面内的三角形反射面，然后利用反射公式和解析几何，使得来自目标天体的电磁波根据三
+角形平面的法线作对称变换，将入射到三角形三个顶点的电磁波分别作对称变换后以平面连接，可以得到三角电
+磁波束。
+
+将电磁波束按照方向映射到馈源舱有效区域所在平面得到平面三角形，从而在同一平面上计算电磁波束被馈源
+舱接收的量。最终将对于来自天体的平行电磁波的馈源舱接收量与基准球面上有效区域三角形接收量相除，得
+到馈源舱有效区域接收到的反射信号与 $300$ 米口径内反射面的反射信号之比。用相同的方法对射向整个基
+准球面的电磁波进行变换，计算馈源舱接收量，与基准球面上有效区域三角形接收量相除，得到基准反射球面
+的接收比。
 \section{模型建立}
-\subsection{符号说明}
+\subsection{符号说明及名词解释}
+\subsubsection{符号说明}
 \begin{center}
     \begin{tabular}{cc}
         \hline
         \makebox[0.3\textwidth][c]{符号} & \makebox[0.4\textwidth][c]{意义}               \\
         \hline
-        R                                & 基准态时反射面半径（m）                         \\
+        $\alpha$                         & 方位角 \\
+        \hline
+        $\beta$                          & 仰角 \\
+        \hline
+        $R$                              & 基准态时反射面半径（m）                         \\
+        \hline
+        $C$                              & 基准球面球心 \\
+        \hline
+        $P$                              & 馈源舱中心  \\
+        \hline
+        $d$                              & 单个促动器的伸缩量 \\
+        \hline
+        $p_1$                           & 调节后馈源舱的接收比 \\
+        \hline
+        $p_2$                           & 基准反射球面的接收比 \\
         \hline
     \end{tabular}
 \end{center}
+\subsubsection{名词解释}
+\begin{enumerate}
+    \item 接收比：馈源舱有效区域接收到的反射信号与反射面的反射信号之比。
+    \item 旋转矩阵：是在乘以一个向量的时候有改变向量的方向但不改变大小的效果并保持了手性的矩阵。
+\end{enumerate}
 \subsection{问题一}
 \subsubsection{模型的建立}
 因为 $\alpha = 0^\circ ,\beta = 90^\circ$ 且题目所给的坐标系以基准球面的球心为原点，
@@ -132,6 +163,8 @@ $500$ 米的球面（基准球面）；工作态时反射面的形状被调节�
 口径为 $300m$，然而在由基准球面调节为工作态时各主索节点与 $z$ 轴的距离会发生改变，而 $z$ 轴同时
 是抛物面的中心对称轴，也是工作态的中轴，所以需要在 $300m$ 口径的范围上增加一定长度 $\xi m$，
 在调整主索节点位置之后，再利用准确的 $300m$ 口径去筛选符合条件的主索节点。
+
+\textbf{Step 1：初筛选范围的确定}
 
 工作抛物面顶点处的法线与基准球面口径为 $300m$ 处的边界点和球心的连线成大约 $30^\circ$ 的
 角，如图 \ref{fig:range} 中左图所示。在基准状态下，促动器的径向伸缩范围为$-0.6\sim +0.6m$，则在水
@@ -151,6 +184,8 @@ $500$ 米的球面（基准球面）；工作态时反射面的形状被调节�
     \label{fig:range}
 \end{figure}
 
+\textbf{Step 2：抛物面顶点打靶范围的确定}
+
 对于理想抛物面顶点的位置，本文采用蒙特卡洛法，对抛物面顶点进行打靶，搜索使由基准球面到工作态所有
 筛选出的主索节点移动距离之和最小的抛物面顶点位置。
 
@@ -158,6 +193,8 @@ $500$ 米的球面（基准球面）；工作态时反射面的形状被调节�
 球面过远时，绝大多数促动器所需调节的距离可能超过 $-0.6\sim +0.6m$。随着顶点由基准球面圆心向下移
 动，调节距离之和呈现先减小后增大的趋势。在贴近基准球面处其值较小，故本文选择的范围为$\left[R-1.2,
 R+1.2\right]m$。
+
+\textbf{Step 3：理想工作态主索节点坐标的求解}
 
 若抛物面的顶点为 $(0,0,-a)$，可以通过焦点 $P$ 和顶点，进而确定抛物面的方程，记 $p$ 为焦距，
 $p = a-R \times 0.534$，抛物面的公式为
@@ -167,11 +204,11 @@ $p = a-R \times 0.534$，抛物面的公式为
 \end{equation}
 
 由于促动器伸缩沿基准球面径向，所以主索节点的位置移动均在一条过基准球面球心的直线上，可以通过球心
-坐标 $(x_1,y_1,z_1)$ 和主索节点坐标 $(x_2,y_2,z_2)$ 计算得这个直线的方程为
+坐标 $(x_c,y_c,z_c)$ 和主索节点坐标 $(x_1,y_1,z_1)$ 计算得这个直线的方程为
 \begin{equation}
     \label{eq:line}
-    \frac{\displaystyle x - x_1}{\displaystyle x_2 - x_1} = \frac{\displaystyle y - y_1}
-    {\displaystyle y_2 - y_1} = \frac{\displaystyle z - z_1}{\displaystyle z_2 - z_1}
+    \frac{\displaystyle x - x_c}{\displaystyle x_1 - x_c} = \frac{\displaystyle y - y_c}
+    {\displaystyle y_1 - y_c} = \frac{\displaystyle z - z_c}{\displaystyle z_1 - z_c}
 \end{equation}
 
 联立方程 \eqref{eq:paraboloid} 与 \eqref{eq:line} 解得忽视促动器调节因素的情况下最理想的主索
@@ -179,46 +216,84 @@ $p = a-R \times 0.534$，抛物面的公式为
 \[
 \begin{dcases}
     \smallskip
-    x = \frac{(2\times x_2\times (p\times z_2 + \sqrt{p\times (a\times x_2^2 + a\times
-    y_2^2 + p\times z_2^2)}))}{(x_2^2 + y_2^2)}  \\
+    x_2 = \frac{(2\times x_1\times (p\times z_1 + \sqrt{p\times (a\times x_1^2 + a\times
+    y_1^2 + p\times z_1^2)}))}{(x_1^2 + y_1^2)}  \\
     \smallskip
-    y = \frac{(2\times x_2\times (p\times z_2 + \sqrt{p\times (a\times x_2^2 + a\times
-    y_2^2 + p\times z_2^2)}))}{(x_2^2 + y_2^2)(x_2 \times y_2)}  \\
-    z = \frac{(2\times x_2\times (p\times z_2 + \sqrt{p\times (a\times x_2^2 + a\times
-    y_2^2 + p\times z_2^2)}))}{(x_2^2 + y_2^2)(x_2 \times z_2)}  \\
+    y_2 = \frac{(2\times x_1\times (p\times z_1 + \sqrt{p\times (a\times x_1^2 + a\times
+    y_1^2 + p\times z_1^2)}))}{(x_1^2 + y_1^2)(x_1 \times y_1)}  \\
+    z_2 = \frac{(2\times x_1\times (p\times z_1 + \sqrt{p\times (a\times x_1^2 + a\times
+    y_1^2 + p\times z_1^2)}))}{(x_1^2 + y_1^2)(x_1 \times z_1)}  \\
 \end{dcases}
 \]
 
-在此范围中先以大步长 $0.1m$ 对抛物面顶点坐标进行枚举。并根据每次的枚举来调节相关主索节点的位置，
-使其位于或尽量贴近理想抛物面。在调节完位置后，其中的一些主索节点很有可能已经超出了口径为 $300m$
-的工作抛物面，需要对其再进行一次筛选，将那些超出工作抛物面范围的主索节点去除。
+\textbf{Step 4：二次筛选}
 
-选取坐标满足$x^2 + y^2 \leqslant 150^2$ 的主索节点来进行下一步计算。将选取出的主索节点与球心
-相连获得直线，由直线与理想抛物面相交获得该点对应于理想抛物面上的点，也就是主索节点由基准球面移动
-到理想抛物面上的位置。由两点位置计算主索节点由基准球面移动到理想抛物面上的距离，并将选取出的点的
-移动距离求和。将移动距离大于 $0.6m$ 的数据限制为 $0.6m$，最终根据总移动距离最小选取理想抛物面。
+在调节主索节点的位置后，其中的一些主索节点可能已经超出了口径为 $300m$ 的区域，此时我们对主索节
+点再进行一次筛选，将那些超出工作抛物面范围的主索节点去除。选取坐标满足 $x_1 + y_1 \leqslant  150^2$
+的主索节点来进行下一步计算。
 
-由大步长将 $a$ 的数据范围确定在 $300.9$ 附近之后，由于题目的精度要求，使用小步长 $0.00001m$ 在
-$299m \sim 301m$的范围内进行精度更高的数据搜索。
+\textbf{Step 5：求促动器伸缩量}
+
+由主索节点前后位置计算对应促动器的伸缩量d，
+\[
+    |d| = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}
+\]
+将移动距离大于 $0.6m$ 的主索节点限制为 $0.6m$，并对所有伸缩量的绝对值求和。在蒙特卡洛法打靶过
+程中最终根据总伸缩量最小选取理想抛物面。
+
+\medskip
+\textbf{目标：$\min\sum |d|$}
 \subsubsection{模型的解}
-通过最终的小步长搜索得出最优值 $a = 300.9053$。可算出 $p = 140.5864$，所以得到的理想抛物面的方
-程为
+利用蒙特卡洛法对抛物线顶点进行打靶，先由大步长 $0.1m$ 可将抛物线顶点的数据范围确定在 $300.8m$
+到 $301.0m$ 之间，再使用小步长 $0.00001m$ 在 $300.8m \sim 301.0m$ 的范围内进行搜索。\\
+%\begin{figure}[!h]
+    {\centering
+    \includegraphics[scale=0.8]{大步长搜索过程.pdf}}
+%\end{figure}
+\\
+%\begin{figure}[!h]
+    {\centering
+    \includegraphics[scale=0.8]{小步长搜索过程.pdf}}
+%\end{figure}
+\\
+
+最终搜索得出最优值 $a = 300.9053$。可算出 $p = 140.5864$，所以得到的理想抛物面的方程为
 \[
     x^2 + y^2 = 562.3456(z + 300.9053)
 \]
 \subsection{问题二}
-\subsubsection{模型的建立及求解}
+\subsubsection{罗德里格旋转公式}
+罗德里格旋转公式是在一个三维空间里，以单位向量 $\overrightarrow{n}$ 为旋转轴，在右手方向下旋转角度
+为 $\theta$ 时，原空间一个三维空间向量 $\overrightarrow{v}$ 经旋转后可由 $\overrightarrow{v_{rot}}$
+表示
+\[
+    \overrightarrow{v_{rot}} = \overrightarrow{v}\cos\theta + (\overrightarrow{n}
+    \times \overrightarrow{v})\sin\theta + \overrightarrow{n}(\overrightarrow{n}
+    \times \overrightarrow{v})(1 - \cos\theta) 
+\]
+\subsubsection{模型的建立}
 由于问题 $2$ 天体角度的变化，导致抛物面的开口方向不再沿 $z$ 轴正方向，又由于抛物面绕轴旋转之后
 公式过于复杂，本文采用逆向旋转整个基准球面的方法来使抛物面开口始终沿 $z$ 轴正方向。
+
+\textbf{Step 1：旋转方式的分析}
 
 如果旋转抛物面，需要先绕 $z$ 轴(方向向量 $(0,0,1)$)沿右手方向旋转 $\alpha$ 角，此时的旋转矩
 阵设为 $R$,再绕 $y$ 轴旋转后的方向向量 $(0,1,0)\cdot R$ 沿右手方向旋转 $90^\circ-\beta$
 角。
 
 所以逆向旋转基准球面的方法应为先绕 $(0,1,0)\cdot R$ 沿右手方向旋转 $\beta-90^\circ$ 角，
-再绕方向向量 $(0,0,1)$ 沿右手方向旋转 $-\alpha$ 角。
+再绕方向向量 $(0,0,1)$ 沿右手方向旋转 $-\alpha$ 角。其中旋转矩阵 $R$ 为
+\[
+    \begin{bmatrix}
+        \cos(-\alpha) & -\sin(-\alpha) & 0 \\
+        \sin(-\alpha) & \cos(-\alpha)  & 0 \\
+        0  &  0  & 1 \\
+    \end{bmatrix}
+\]
 
-对于两次旋转的叠加，本文使用Hamilton四元数和罗德里格旋转公式相结合的方法，证明引理：
+\textbf{Step 2：证明旋转叠加的引理1}
+
+对于两次旋转的叠加，本文使用Hamilton四元数和罗德里格旋转公式相结合的方法，证明引理1：
 \begin{quote}
     第一次绕 $\overrightarrow{n_1}$ 旋转 $\theta _1$ 角，第二次绕 $\overrightarrow{n_2}$
     旋转 $\theta _2$ 角，那么相当于绕 $\overrightarrow{n}$ 旋转 $\theta$ 角。
@@ -242,12 +317,12 @@ $299m \sim 301m$的范围内进行精度更高的数据搜索。
 \noindent\textbf{证明：}
 
 Hamilton四元数为高阶复数，形如：$q=a+bi+cj+dk$ \par
-$i,j,k$ 为虚数，$i^2=j^2=k^2=-1;$ \par
-$i \times j=k,$ \par
-$i \times k=-j,$ \par
-$j \times k=i,$ \par
-$j \times i=-k,$ \par
-$k \times i=j,$ \par
+$i,j,k$ 为虚数，$i^2=j^2=k^2=-1;$
+$i \times j=k,$
+$i \times k=-j,$
+$j \times k=i,$
+$j \times i=-k,$
+$k \times i=j,$
 $k \times j=-i;$ \par
 $q=a+bi+cj+dk$ 的共轭四元数为：$q^*=a-bi-cj-dk$ \par
 满足：\par
@@ -365,7 +440,7 @@ $r = qpq^{-1} = (\cos(\frac{\theta}{2}) +
 \end{align*}
 
 由于 $(\overrightarrow{n_1} \times \overrightarrow{n_2})^2 + (\overrightarrow{n_1} 
-\times \overrightarrow{n_1})^2 = 1$，易知，实部和虚部平方之和为 $1$。
+\cdot \overrightarrow{n_1})^2 = 1$，易知，实部和虚部平方之和为 $1$。
 
 由此可得：旋转角为
 \[
@@ -383,40 +458,50 @@ $r = qpq^{-1} = (\cos(\frac{\theta}{2}) +
         {\displaystyle \sin(\frac{\theta}{2})} 
     \end{split}
 \]\par
-\textbf{证毕 $\Box$}
+\textbf{引理1证毕 $\Box$}
 
 \medskip
 \medskip
 \medskip
-我们将题目附件 $1$ 中数据引入，使用上文中证明的旋转公式，将基准球面各个点的坐标旋转到抛物
-面的对应位置，并将各点坐标保存到“旋转球面.xls”文件中。之后，我们根据工作抛物面的范围，选
-取出调整后可满足位于工作抛物面之内的点。这里我们采用条件为：
+\textbf{Step 3：利用引理以及罗德里格旋转公式计算旋转后的球面}
+
+我们将题目附件 $1$ 中数据引入，使用上文中证明的旋转公式，将基准球面各个点的坐标旋转到新的坐标
+系中，使得新坐标系中的抛物面以 $z$ 轴为中轴，且开口沿 $z$ 轴正半轴，并将各点坐标保存到“旋转球
+面.xls”文件中。
+
+\textbf{Step 4：利用问题一所得程序求问题二的理想抛物面顶点}
+由于抛物面开口仍沿 $z$ 轴正方向，所以可以直接利用问题一所得程序和旋转后的主索节点坐标计算旋转后
+的理想抛物面顶点以及各主索节点对应促动器的伸缩量。
+
+由于问题一中仅使用了促动器伸缩量的绝对值，我们需要根据主索节点调节前后的坐标变化，分析伸缩量的正
+负。具体过程如下：
+
+根据主索结点调整前后坐标的 $z$ 轴坐标高低，可以判断促动器伸缩量的正负：在旋转后的坐标系中，天体
+电磁波的方向是竖直向下，主索节点在 $z$ 轴上的坐标均为负数。所以当促动器伸长时，主索节点更接近球
+心，$z$ 轴的坐标将增大。反之，$z$ 轴的坐标将减小。
+
+所以根据
 \[
-    x^2+y^2<(150+0.3)^2
+    d = 
+    \left\{
+        \begin{array}{rl}
+            |d|,&z_2>z_1 \\
+            -|d|,&z_2<z_1
+        \end{array}
+    \right.
 \]
-此处选用 $150+0.3$ 的原因同第一问。
+来判断实际的促动器伸缩量。
 
-之后，在旋转后的坐标系中，我们同第一问一样，使用蒙特卡罗方法枚举抛物面顶点的坐标，并利用变
-步长法提高精度。此处对于顶点坐标的选取原则不变，仍为使得最终所有顶点调节的距离之和最小，对
-于调节范围之外的点，计其调节距离为 $0.6m$。求出最优的顶点后，可以获得对应的抛物面方程。
+\textbf{Step 5：通过旋转的逆运用求解原坐标系中抛物线顶点坐标}
 
-此时，我们有条件来求解每个主索结点在抛物面上对应的位置。同第一问，连接主索结点 $(x_1,y_1,z_1)$
-与球心 $(x_c,y_c,z_c)$ 作出直线:
-\[
-    \frac{x-x_c}{x_1-x_c}=\frac{y-y_c}{y_1-y_c}=\frac{z-z_c}{z_1-z_c}
-\]
-直线与抛物面交点即为主索结点在抛物面上对应的位置。
-根据以上模型，在旋转后的坐标系中，对于每个主索结点 $(x_1,y_1,z_1)$，得到其在抛物面上对应的新
-位置 $(x_2,y_2,z_2)$ 后，我们可以求出该点移动距离:
-\[
-    d = \sqrt{(x_2-x_1)^2+(y_2-y_1)^2+(z_2-z_1)^2}
-\]
+将旋转之后的理想抛物面顶点坐标，再通过引理1的结论：旋转轴不变，旋转角度为 $-\theta$，即可得到题干
+所给坐标系中理想抛物面的顶点坐标
 
-同时，根据主索结点新旧位置的z坐标高低，我们可以判断促动器伸缩：如果新位置的 $z$ 坐标更大，则促
-动器伸缩状态为“伸”（计伸缩量 $d$ 为正）；否则促动器伸缩状态为“缩”（计伸缩量 $d$ 为负）。
+\textbf{Step 6：根据伸缩量计算原坐标系中主索节点的位置}
 
-统计完每个主索结点的伸缩量后，我们回到原坐标系，根据基准球径向上各个点的伸缩量计算主索结点移动后
-的位置坐标。设主索结点在基准球面上的原始坐标为 $(x0, y0, z0)$, 该节点对应促动器的伸缩量为 $d$，
+利用上述步骤所计算出的工作态 $300m$ 口径内主索节点的对应编号以及其伸缩量，再根据“附件1.xlsx”中
+原坐标系主索节点基准态坐标来计算其工作态的新坐标。
+设主索结点在基准球面上的原始坐标为 $(x0, y0, z0)$, 该节点对应促动器的伸缩量为 $d$，
 主索结点对应抛物面上的新点坐标为 $(x, y,z)$,计算公式如下：
 \[
     \begin{dcases}
@@ -427,12 +512,134 @@ $r = qpq^{-1} = (\cos(\frac{\theta}{2}) +
         z = z_0 - \frac{(d*z_0)}{\sqrt{x_0^2+y_0^2+z_0^2}};
     \end{dcases}
 \]
-
-之后将得到的解存入目录的附录中。
+\subsubsection{模型的解}
+首先通过引理1将“附件1.xlsx”中的数据转换为旋转后的坐标数据保存到“旋转球面.xls”。然后利用旋转后的
+数据，使用步骤1的理想抛物面求解过程搜索出理想抛物面的坐标，此坐标系中坐标为 $(0,0,-300.88608)$，
+同时判断伸缩量的正负，保存到“result.xlsx”中。通过引理1的逆旋转，将顶点坐标转换到原坐标系中，其值
+为 $(-49.3998,-36.9491,-294.4942)$。然后根据伸缩量和“附件1.xlsx”中的基准球面坐标计算工作态时
+主索节点的坐标，数据存入“result.xlsx”。
+\begin{figure}[!h]
+    \centering
+    \includegraphics[scale=0.8]{A2.pdf}
+    \caption{工作区主索节点示意图}
+\end{figure}
 \subsection{问题三}
 \subsubsection{模型的建立}
+由题目数据，馈源舱接收信号的有效区域圆盘面积为 $\frac{\pi}{4} $ 平方米，而估算的三角形反射
+面板的面积大约为 $58$ 平方米，反射面板的面积约为馈源舱有效区域的 $73.85$ 倍，由于大小差距巨
+大，我们计算馈源舱是否接收到反射面板的信号，可以近似视为判断馈源舱中心是否落在了三角形反射
+面板反射的三棱柱形电磁波束中。
+
+\textbf{Step 1：反射电磁波的求解}
+
+我们计算天体平行电磁波经过反射面板后的反射电磁波，首先通过天体的位置 $\alpha = 36.795^\circ,
+\beta = 78.169^\circ$，可以得到天体电磁波的方向向量 $\overrightarrow{c} 
+(-\cos(\alpha),-\sin(\alpha),-\tan(\beta))$三角形反射面板的顶点坐标可近似为顶点对应的主索
+节点的坐标，设顶点坐标为 $(x_0,y_0,$\\$z_0)$，通过顶点坐标和电磁波的方向向量，我们可以得到射向这
+个顶点的电磁波的直线方程：
+\[
+    \frac{x-x_0}{-\cos\alpha} = \frac{y-y_0}{-\sin\alpha} = \frac{z-z_0}{-\tan\beta} 
+\]
+
+利用三角形三个顶点的坐标，可以计算出三角形的法向量，记为 $\overrightarrow{n}=(n_1,n_2,n_3)$。
+同样可以利用三角形的顶点和 $\overrightarrow{n} $ 计算出顶点处电磁波反射的法线，利用法线和入
+射光线可以计算出射光线，具体过程如下：
+
+取入射直线上区别于三角形顶点的一个点，本文统一采用三角形顶点的 $z$ 轴坐标 $+10$ 的点，
+此点坐标暂记为点 $T(x_t,y_t,z_t)$，其中
+\[
+    \begin{dcases}
+        x_t=x_0+\frac{10\cos(\alpha)}{\tan(\beta)} \\
+        y_t=y_0+\frac{10\sin(\alpha)}{\tan(\beta)} \\
+        z_t=z_0+10
+    \end{dcases}
+\]
+
+计算法线和入射直线的夹角：$\cos(\theta)=\frac{\displaystyle\overrightarrow{n}\overrightarrow{c}}
+{\displaystyle|n||c|}$
+
+\smallskip
+$T$ 与顶点的距离：$\delta=\displaystyle\sqrt{10^2+(\frac{\displaystyle10\cos(\alpha)}
+{\displaystyle\tan(\beta)})^2+(\frac{\displaystyle10\sin(\alpha)}{\displaystyle\tan(\beta)})^2}$
+
+$T$ 点到法线的垂足记为 $R(x_r,y_r,z_r)$
+
+$R$ 到顶点的距离为 $D=\delta\cdot \cos(\theta)$
+
+可以得到
+\[
+    \begin{dcases}
+        x_r=x_0+n_1 \cdot\frac{d}{\sqrt{n_1^2+n_2^2+n_3^2}}  \\
+        y_r=y_0+n_2 \cdot\frac{d}{\sqrt{n_1^2+n_2^2+n_3^2}}  \\
+        z_r=z_0+n_3 \cdot\frac{d}{\sqrt{n_1^2+n_2^2+n_3^2}}  \\
+    \end{dcases}
+\]
+
+
+设 $T$ 关于法线的对称点为 $T'(x_{tt},y_{tt},z_{tt})$
+
+通过向量 $\overrightarrow{TT'}=2\overrightarrow{TR}$
+
+可以计算出：
+\[
+    \begin{dcases}
+        x_{tt}=2x_r-x_t \\
+        y_{tt}=2y_r-y_t \\
+        z_{tt}=2z_r-z_t \\
+    \end{dcases}
+\]
+
+得到反射直线：
+\[
+    \frac{x-x_0}{2x_R-x_t-x_0} = \frac{y-y_0}{2y_R-y_t-y_0} = 
+    \frac{z-z_0}{z_R-z_t-z_0}
+\]
+
+\textbf{Step 2：求反射电磁波与有效区域平面的交点}
+
+馈源舱中心的坐标 $P(x_p,y_p,z_p)$ 可以利用
+\[
+    \begin{dcases}
+        -\frac{x_p}{\cos\alpha} = -\frac{y_p}{\sin\alpha} = -\frac{z_p}{\tan\beta} \\
+        x_p^2 + y_p^2 + z_p^2 = (R \cdot 0.534)^2
+    \end{dcases}
+\]
+求出 $P(-\cos\alpha\cdot t_0,-\sin\alpha \cdot t_0,-\tan\beta\cdot t_0)$，其中
+$t_0 = 0.534R\cos\beta$
+
+选取馈源舱有效区域圆盘所在的平面，平面的表达式可以用点法式写出：
+\[
+    -\cos\alpha(x + t_0\cos\alpha) - \sin\alpha(y + t_0\sin\alpha) - 
+    \tan\beta(z + t_0\tan\beta) = 0 
+\]
+
+将反射直线与平面的表达式联立：
+\[
+    \begin{dcases}
+        \frac{x-x_0}{2x_R-x_t-x_0} = \frac{y-y_0}{2y_R-y_t-y_0} = 
+        \frac{z-z_0}{z_R-z_t-z_0}  \\
+        -\cos\alpha(x + t_0\cos\alpha) - \sin\alpha(y + t_0\sin\alpha) - 
+        \tan\beta(z + t_0\tan\beta) = 0 
+    \end{dcases}
+\]
+可以解出反射到有效区域平面的点的坐标
+
+\textbf{Step 3：判断馈源舱是否在接收到反射电磁波中}
+
+由于第二步求得与中心共面的三个点，判断馈源舱中心是否接收到反射电磁波可以视为判断，馈源舱中心是否
+在反射所得的三个点围成的三角形内，判断方法可以利用几何性质：三角形内一点到三顶点的向量两两夹角之
+和为 $360^\circ$，而三角形外一点到三顶点的向量两两夹角之和小于 $360^\circ$。
 \subsubsection{模型的解}
-\nocite{宋叶志2019}
+分别引入问题 $2$ 所得数据“附件4.xlsx”，和基准球面数据“附件1.xlsx”以及“附件3.xlsx”，首先利用“附
+件4.xlsx”中的工作口径内主索节点的编号，在“附件3.xlsx”中筛选所有以工作口径内主索节点为三顶点的反
+射面板，将筛选结果输出为“work\_triangles.xlsx”保存在支撑材料中。
+
+对于每个在“work\_triangles.xlsx”中的三角形面板，可利用模型和“附件4.xlsx”中的数据解出其反射电
+磁波是否被接收，对于所有“附件3.xlsx”中的反射面板，可利用模型和“附件1.xlsx”中的数据解出基准球面
+时的反射面板反射电磁波是否会被接收。
+
+最终计算结果为：基于第 $2$ 问的反射面调节方案，调节后馈源舱的接收比为 $p1 = 29.62\%$。对于整个基
+准反射球面计算，得到未经调整的馈源舱接收比：$p2 = 10.02\%$。
 \bibliography{references}
 \begin{appendices}
 \section{第一问MATLAB代码一(大步长)}
@@ -568,8 +775,8 @@ a2 = n2(1,1);   b2 = n2(1,2);   c2 = n2(1,3);
 n12 = [b1*c2-b2*c1, a2*c1-a1*c2, a1*b2-a2*b1];
 
 th = 2 * acosd(cosd(th1/2)*cosd(th2/2)-sum(n1.*n2)*sind(th1/2)*sind(th2/2));
-n = (n1*cosd(th2/2)*sind(th1/2)+n2*cosd(th1/2)*sind(th2/2)+
-    n12*sind(th1/2)*sind(th2/2))/sind(th/2);
+n = (n1*cosd(th2/2)*sind(th1/2)+n2*cosd(th1/2)*sind(th2/2)+ ...
+        +n12*sind(th1/2)*sind(th2/2))/sind(th/2);
 a1 = n(1,1);    b1 = n(1,2);    c1=n(1,3);
 
 %求data2也就是旋转后的球面点坐标
@@ -748,8 +955,8 @@ a2 = n2(1,1);   b2 = n2(1,2);   c2 = n2(1,3);
 n12 = [b1*c2-b2*c1, a2*c1-a1*c2, a1*b2-a2*b1];
 
 th = 2 * acosd(cosd(th1/2)*cosd(th2/2)-sum(n1.*n2)*sind(th1/2)*sind(th2/2));
-n = (n1*cosd(th2/2)*sind(th1/2)+n2*cosd(th1/2)*sind(th2/2)+
-    n12*sind(th1/2)*sind(th2/2))/sind(th/2);
+n = (n1*cosd(th2/2)*sind(th1/2)+n2*cosd(th1/2)*sind(th2/2)+ ...
+        +n12*sind(th1/2)*sind(th2/2))/sind(th/2);
 a1 = n(1,1);    b1 = n(1,2);    c1=n(1,3);
 
 %求data2也就是旋转后的球面点坐标
@@ -907,9 +1114,355 @@ for i = 1 : cnt3
 end
 
 \end{lstlisting}
-\section{第三问MATLAB代码一}
+\section{第二问MATLAB代码三(顶点)}
 \begin{lstlisting}[language=matlab]
+clc,clear;
+R = 300.4;
+
+n2 = [0 0 1];   n1 = [0 1 0];   
+alpha = -36.795;     beta = 78.169;
+n1 = n1 * [cosd(alpha), -sind(alpha),0;sind(alpha),cosd(alpha),0;0,0,1]；
+th2 = alpha;    th1 = -beta+90;
+
+a1 = n1(1,1);   b1 = n1(1,2);   c1 = n1(1,3);
+a2 = n2(1,1);   b2 = n2(1,2);   c2 = n2(1,3);
+n12 = [b1*c2-b2*c1, a2*c1-a1*c2, a1*b2-a2*b1];
+
+th = 2 * acosd(cosd(th1/2)*cosd(th2/2)-sum(n1.*n2)*sind(th1/2)*sind(th2/2));
+n = (n1*cosd(th2/2)*sind(th1/2)+n2*cosd(th1/2)*sind(th2/2)+ ...
+        +n12*sind(th1/2)*sind(th2/2))/sind(th/2);
+a1 = n(1,1);    b1 = n(1,2);    c1=n(1,3);
+
+finala=3.008860800000000e+02;
+
+a2 = 0;
+b2 = 0;
+c2 = -finala;
+v = [a2 b2 c2];
+vv = [b1*c2-b2*c1, a2*c1-a1*c2, a1*b2-a2*b1];
+v1 = v*cosd(th) + vv*sind(th) + n*sum(n.*v)*(1-cosd(th))
+
 \end{lstlisting}
-\section{第三问MATLAB代码二}
+\section{第三问MATLAB代码一(筛选工作区域)}
+\begin{lstlisting}[language=matlab]
+clear all, clc
+[n1,names1,n2] = xlsread("附件3.csv", 1, 'A2:A4301');
+[n1,names2,n2] = xlsread("附件3.csv", 1, 'B2:B4301');
+[n1,names3,n2] = xlsread("附件3.csv", 1, 'C2:C4301');
+[n1,names_ok,n2] = xlsread("附件四备份.xlsx", 3, 'A2:A695');
+names_ok
+newmap=containers.Map();												%	创建一个空的map对象
+for i = 1:694
+    name = char(names_ok(i));
+    newmap(name) = 1;
+end
+contained=containers.Map();
+work_triangles = [];
+cnt = 0;
+for i = 1:4300
+    name1 = names1(i);
+    name2 = names2(i);
+    name3 = names3(i);
+    name11 = char(names1(i));
+    name22 = char(names2(i));
+    name33 = char(names3(i));
+    %只要三个点中有一个点不满足条件，就把这个三角形筛出去
+    if isKey(newmap, name11)==0
+        continue;
+    end
+    if isKey(newmap, name22)==0
+        continue;
+    end
+    if isKey(newmap, name33)==0 
+        continue;
+    end
+    cnt = cnt + 1;
+    ii = num2str(cnt);
+    str1 = strcat('A',ii);
+    str2 = strcat('B',ii);
+    str3 = strcat('C',ii);
+    str1=[str1,':',str1];
+    str2=[str2,':',str2];
+    str3=[str3,':',str3];
+    xlswrite('work_triangles.xlsx',name1,1,str1);
+    xlswrite('work_triangles.xlsx',name2,1,str2);
+    xlswrite('work_triangles.xlsx',name3,1,str3);
+end
+
+\end{lstlisting}
+\section{第三问MATLAB代码二(求$p_1$)}
+\begin{lstlisting}[language=matlab]
+    clc,clear all;
+
+%输入题目所给数据
+alpha=36.795;
+beta=78.169;
+
+%计算入射光线向量方向
+c=[-cosd(alpha),-sind(alpha),-tand(beta)];
+
+%P的坐标
+R=300.4;
+t0=cosd(beta)*R*0.534;
+xp = -cosd(alpha)*t0;
+yp = -sind(alpha)*t0;
+zp = -tand(beta)*t0;
+
+%以下数据用于获取某个点的具体坐标
+[n1,dataname,n2] = xlsread("附件四备份.xlsx", 2, 'A2:A695');
+datax = xlsread('附件四备份.xlsx', 2, 'B2:B695');
+datay = xlsread('附件四备份.xlsx', 2, 'C2:C695');
+dataz = xlsread('附件四备份.xlsx', 2, 'D2:D695');
+namemap = containers.Map();
+
+for i = 1:694
+    name = char(dataname(i));
+    namemap(name) = i;%!!!!不是namemap(name).i
+end
+
+%以下数据用于获取某个三角的三个点
+[n1,datatri,n2] = xlsread('work_triangles.csv', 1, 'A1:C1300');
+
+worked = 0;
+for i = 1:1300
+    
+    %取出这个三角形的三个点
+    name1 = char(datatri(i,1));
+    i1 = namemap(name1);
+    name2 = char(datatri(i,2));
+    i2 = namemap(name2);
+    name3 = char(datatri(i,3));
+    i3 = namemap(name3);
+    %取出这三个点的九个坐标值
+    x1=datax(i1);
+    y1=datay(i1);
+    z1=dataz(i1);
+    x2=datax(i2);
+    y2=datay(i2);
+    z2=dataz(i2);
+    x3=datax(i3);
+    y3=datay(i3);
+    z3=dataz(i3);
+    xs = [x1, x2, x3];
+    ys = [y1, y2, y3];
+    zs = [z1, z2, z3];
+    
+    %计算这个面的法向量
+    G12 = [x2-x1,y2-y1,z2-z1];
+    a1 = G12(1,1);  b1 = G12(1,2);  c1 = G12(1,3);
+    G23 = [x3-x2,y3-y2,z3-z2];
+    a2 = G23(1,1);  b2 = G23(1,2);  c2 = G23(1,3);
+    
+    %设法向量为n
+    n1 = b1*c2-b2*c1;
+    n2 = a2*c1-a1*c2;
+    n3 = a1*b2-a2*b1;
+
+    %入射光线与法向量夹角theta
+    theta=acosd(cosd(beta)*(-n1*cosd(alpha)-n2*sind(alpha)-n3*tand(beta))/sqrt(n1^2+n2^2+n3^2))
+
+    %记得存好三角形三个点的映射坐标
+    newxs = [];
+    newys = [];
+    newzs = [];
+    for j = 1:3
+
+        %顶点z坐标增加10，长度增加delta
+        delta=sqrt(100+100*sind(alpha)*sind(alpha)/(tand(beta)*tand(beta))+ ...
+                +100*cosd(alpha)*cosd(alpha)/(tand(beta)*tand(beta)))
+
+        d=abs(cosd(theta)*delta)
+
+        x0=xs(j);
+        y0=ys(j);
+        z0=zs(j);
+        %增加后的坐标
+        xt=x0+cosd(alpha)*10/tand(beta);
+        yt=y0+sind(alpha)*10/tand(beta);
+        zt=z0+10;
+
+        zr=z0+n3*d/sqrt(n1^2+n2^2+n3^2);
+        yr=y0+n2*d/sqrt(n1^2+n2^2+n3^2);
+        xr=x0+n1*d/sqrt(n1^2+n2^2+n3^2);
+
+        %对称点
+        xtt=2*xr-xt;
+        ytt=2*yr-yt;
+        ztt=2*zr-zt;
+
+        x=@(m)m*(2*xr-xt-x0)+x0; 
+        y=@(m)m*(2*yr-yt-y0)+y0; 
+        z=@(m)m*(2*zr-zt-z0)+z0; 
+
+        syms m;
+        fun=cosd(alpha)*(m*(2*xr-xt-x0)+x0+cosd(alpha)*t0)+ ...
+                +sind(alpha)*(m*(2*yr-yt-y0)+y0+sind(alpha)*t0)+ ...
+                    +tand(beta)*(m*(2*zr-zt-z0)+z0+tand(beta)*t0)==0;
+        s=solve(fun,m);
+        
+        newxs(1,j) = x(s);
+        newys(1,j) = y(s);
+        newzs(1,j) = z(s);
+    end
+    x4=newxs(1,1);
+    y4=newys(1,1);
+    z4=newzs(1,1);
+    x5=newxs(1,2);
+    y5=newys(1,2);
+    z5=newzs(1,2);
+    x6=newxs(1,3);
+    y6=newys(1,3);
+    z6=newzs(1,3);
+    %xp,yp,zp早就求出来了（见开头）
+    PA=[-xp+x4,-yp+y4,-zp+z4];
+    PB=[-xp+x5,-yp+y5,-zp+z5];
+    PC=[-xp+x6,-yp+y6,-zp+z6];
+    theta1=acosd(sum(PA.*PB)/(sqrt(sum(PA.*PA))*sqrt(sum(PB.*PB))));
+    theta2=acosd(sum(PC.*PB)/(sqrt(sum(PC.*PC))*sqrt(sum(PB.*PB))));
+    theta3=acosd(sum(PA.*PC)/(sqrt(sum(PA.*PA))*sqrt(sum(PC.*PC))));
+    if abs(theta1+theta2+theta3-360)<0.01
+        worked = worked + 1;
+    end
+end
+ans = worked / 1300
+
+\end{lstlisting}
+\section{第三问MATLAB代码三(求$p_2$)}
+\begin{lstlisting}[language=matlab]
+clc,clear all;
+
+%输入题目所给数据
+alpha=36.795;
+beta=78.169;
+
+%计算入射光线向量方向
+c=[-cosd(alpha),-sind(alpha),-tand(beta)];
+
+%P的坐标
+R=300.4;
+t0=cosd(beta)*R*0.534;
+xp = -cosd(alpha)*t0;
+yp = -sind(alpha)*t0;
+zp = -tand(beta)*t0;
+
+%以下数据用于获取某个点的具体坐标
+[n1,dataname,n2] = xlsread("附件1.csv", 1, 'A2:A2227');
+datax = xlsread("附件1.csv", 1, 'B2:B2227');
+datay = xlsread("附件1.csv", 1, 'C2:C2227');
+dataz = xlsread("附件1.csv", 1, 'D2:D2227');
+namemap = containers.Map();
+
+for i = 1:2226
+    name = char(dataname(i));
+    namemap(name) = i;%!!!!不是namemap(name).i
+end
+
+%以下数据用于获取某个三角的三个点
+[n1,datatri,n2] = xlsread('附件3.csv', 1, 'A2:C4301');
+
+worked = 0;
+for i = 1:4300
+    
+    %取出这个三角形的三个点
+    name1 = char(datatri(i,1));
+    i1 = namemap(name1);
+    name2 = char(datatri(i,2));
+    i2 = namemap(name2);
+    name3 = char(datatri(i,3));
+    i3 = namemap(name3);
+    %取出这三个点的九个坐标值
+    x1=datax(i1);
+    y1=datay(i1);
+    z1=dataz(i1);
+    x2=datax(i2);
+    y2=datay(i2);
+    z2=dataz(i2);
+    x3=datax(i3);
+    y3=datay(i3);
+    z3=dataz(i3);
+    xs = [x1, x2, x3];
+    ys = [y1, y2, y3];
+    zs = [z1, z2, z3];
+    
+    %计算这个面的法向量
+    G12 = [x2-x1,y2-y1,z2-z1];
+    a1 = G12(1,1);  b1 = G12(1,2);  c1 = G12(1,3);
+    G23 = [x3-x2,y3-y2,z3-z2];
+    a2 = G23(1,1);  b2 = G23(1,2);  c2 = G23(1,3);
+%    vv = [b1*c2-b2*c1, a2*c1-a1*c2, a1*b2-a2*b1];
+    
+    %设法向量为n
+    n1 = b1*c2-b2*c1;
+    n2 = a2*c1-a1*c2;
+    n3 = a1*b2-a2*b1;
+
+    %入射光线与法向量夹角theta
+    theta=acosd(cosd(beta)*(-n1*cosd(alpha)-n2*sind(alpha)-n3*tand(beta))/sqrt(n1^2+n2^2+n3^2))
+
+    %记得存好三角形三个点的映射坐标
+    newxs = [];
+    newys = [];
+    newzs = [];
+    for j = 1:3
+
+        %顶点z坐标增加10，长度增加delta
+        delta=sqrt(100+100*sind(alpha)*sind(alpha)/(tand(beta)*tand(beta))+ ...
+                +100*cosd(alpha)*cosd(alpha)/(tand(beta)*tand(beta)))
+
+        d=abs(cosd(theta)*delta)
+
+        x0=xs(j);
+        y0=ys(j);
+        z0=zs(j);
+        %增加后的坐标
+        xt=x0+cosd(alpha)*10/tand(beta);
+        yt=y0+sind(alpha)*10/tand(beta);
+        zt=z0+10;
+
+        zr=z0+n3*d/sqrt(n1^2+n2^2+n3^2);
+        yr=y0+n2*d/sqrt(n1^2+n2^2+n3^2);
+        xr=x0+n1*d/sqrt(n1^2+n2^2+n3^2);
+
+        %对称点
+        xtt=2*xr-xt;
+        ytt=2*yr-yt;
+        ztt=2*zr-zt;
+
+        x=@(m)m*(2*xr-xt-x0)+x0; 
+        y=@(m)m*(2*yr-yt-y0)+y0; 
+        z=@(m)m*(2*zr-zt-z0)+z0; 
+
+        syms m;
+        fun=cosd(alpha)*(m*(2*xr-xt-x0)+x0+cosd(alpha)*t0)+sind(alpha)*(m*(2*yr-yt-y0)+y0+ ...
+                +sind(alpha)*t0)+tand(beta)*(m*(2*zr-zt-z0)+z0+tand(beta)*t0)==0;
+        s=solve(fun,m);
+        
+        newxs(1,j) = x(s);
+        newys(1,j) = y(s);
+        newzs(1,j) = z(s);
+    end
+    x4=newxs(1,1);
+    y4=newys(1,1);
+    z4=newzs(1,1);
+    x5=newxs(1,2);
+    y5=newys(1,2);
+    z5=newzs(1,2);
+    x6=newxs(1,3);
+    y6=newys(1,3);
+    z6=newzs(1,3);
+    %xp,yp,zp早就求出来了（见开头）
+    PA=[-xp+x4,-yp+y4,-zp+z4];
+    PB=[-xp+x5,-yp+y5,-zp+z5];
+    PC=[-xp+x6,-yp+y6,-zp+z6];
+    theta1=acosd(sum(PA.*PB)/(sqrt(sum(PA.*PA))*sqrt(sum(PB.*PB))));
+    theta2=acosd(sum(PC.*PB)/(sqrt(sum(PC.*PC))*sqrt(sum(PB.*PB))));
+    theta3=acosd(sum(PA.*PC)/(sqrt(sum(PA.*PA))*sqrt(sum(PC.*PC))));
+    if abs(theta1+theta2+theta3-360)<0.01
+        worked = worked + 1;
+    end
+end
+ans = worked / 4300
+
+\end{lstlisting}
 \end{appendices}
 \end{document}
